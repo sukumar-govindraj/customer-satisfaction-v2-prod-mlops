@@ -84,12 +84,6 @@ h3. Deployment Pipeline Steps
 \| deployment\_trigger | Check MSE threshold to decide deployment |
 \| model\_deployer | Deploy model as MLflow service if criteria met |
 
-h2. Streamlit Demo App
-A live demo is hosted \[here|[https://share.streamlit.io/ayush714/customer-satisfaction/main](https://share.streamlit.io/ayush714/customer-satisfaction/main)].
-To run locally:
-{code\:bash}
-streamlit run streamlit\_app.py
-{code}
 
 h2. Usage
 Run pipelines:

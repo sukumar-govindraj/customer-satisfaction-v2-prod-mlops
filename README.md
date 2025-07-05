@@ -4,7 +4,7 @@
 
 **Problem statement**: For a given customer's historical data, we are tasked to predict the review score for the next order or purchase. We will be using the [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce). This dataset has information on 100,000 orders from 2016 to 2018 made at multiple marketplaces in Brazil. Its features allow viewing charges from various dimensions: from order status, price, payment, freight performance to customer location, product attributes and finally, reviews written by customers. The objective here is to predict the customer satisfaction score for a given order based on features like order status, price, payment, etc. In order to achieve this in a real-world scenario, we will be using [ZenML](https://zenml.io/) to build a production-ready pipeline to predict the customer satisfaction score for the next order or purchase.
 
-The purpose of this repository is to demonstrate how [ZenML](https://github.com/zenml-io/zenml) empowers your business to build and deploy machine learning pipelines in a multitude of ways:
+We will be using ZenML to build and deploy machine learning pipelines in a multitude of ways:
 
 - By offering you a framework and template to base your own work on.
 - By integrating with tools like [MLflow](https://mlflow.org/) for deployment, tracking and more
@@ -51,7 +51,6 @@ Instead, we are building an end-to-end pipeline for continuously predicting and 
 
 This pipeline can be deployed to the cloud, scale up according to our needs, and ensure that we track the parameters and data that flow through every pipeline that runs. It includes raw data input, features, results, the machine learning model and model parameters, and prediction outputs. ZenML helps us to build such a pipeline in a simple, yet powerful, way.
 
-In this Project, we give special consideration to the [MLflow integration](https://github.com/zenml-io/zenml/tree/main/examples) of ZenML. In particular, we utilize MLflow tracking to track our metrics and parameters, and MLflow deployment to deploy our model. We also use [Streamlit](https://streamlit.io/) to showcase how this model will be used in a real-world setting.
 
 ### Training Pipeline
 
@@ -83,58 +82,3 @@ service = prediction_service_loader(
 )
 ...
 service.predict(...)  # Predict on incoming data from the application
-```
-
-While this ZenML Project trains and deploys a model locally, other ZenML integrations such as the [Seldon](https://github.com/zenml-io/zenml/tree/main/examples/seldon_deployment) deployer can also be used in a similar manner to deploy the model in a more production setting (such as on a Kubernetes cluster). We use MLflow here for the convenience of its local deployment.
-
-![training_and_deployment_pipeline](_assets/training_and_deployment_pipeline_updated.png)
-
-## :notebook: Diving into the code
-
-You can run two pipelines as follows:
-
-- Training pipeline:
-
-```bash
-python run_pipeline.py
-```
-
-- The continuous deployment pipeline:
-
-```bash
-python run_deployment.py
-```
-
-## 🕹 Demo Streamlit App
-
-There is a live demo of this project using [Streamlit](https://streamlit.io/) which you can find [here](https://share.streamlit.io/ayush714/customer-satisfaction/main). It takes some input features for the product and predicts the customer satisfaction rate using the latest trained models. If you want to run this Streamlit app in your local system, you can run the following command:-
-
-```bash
-streamlit run streamlit_app.py
-```
-
-## :question: FAQ
-
-1. When running the continuous deployment pipeline, I get an error stating: `No Step found for the name mlflow_deployer`.
-
-   Solution: It happens because your artifact store is overridden after running the continuous deployment pipeline. So, you need to delete the artifact store and rerun the pipeline. You can get the location of the artifact store by running the following command:
-
-   ```bash
-   zenml artifact-store describe
-   ```
-
-   and then you can delete the artifact store with the following command:
-
-   **Note**: This is a dangerous / destructive command! Please enter your path carefully, otherwise it may delete other folders from your computer.
-
-   ```bash
-   rm -rf PATH
-   ```
-
-2. When running the continuous deployment pipeline, I get the following error: `No Environment component with name mlflow is currently registered.`
-
-   Solution: You forgot to install the MLflow integration in your ZenML environment. So, you need to install the MLflow integration by running the following command:
-
-   ```bash
-   zenml integration install mlflow -y
-   ```
